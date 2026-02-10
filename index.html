@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kindergarten Language (3rd Grading 1st Periodical Exam)</title>
+    <style>
+        /* General Web Styles */
+        body { font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; background-color: #FFFDE7; padding: 20px; }
+        .container { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); max-width: 800px; margin: auto; border: 5px solid #FFEB3B; }
+        
+        h1 { color: #F57F17; text-align: center; font-size: 28px; margin-bottom: 5px; }
+        .instruction-box { background: #FFF9C4; padding: 12px; border-radius: 10px; border: 2px dashed #FBC02D; margin: 10px 0 15px 0; color: #5D4037; font-size: 14px; line-height: 1.5; }
+        .section-header { background: #E1F5FE; color: #0277BD; padding: 6px; border-radius: 8px; margin-top: 15px; font-size: 18px; text-align: center; font-weight: bold; }
+        
+        .student-info-top { margin-bottom: 15px; padding: 10px; background: #F3E5F5; border-radius: 10px; text-align: center; }
+        input[type="text"] { padding: 8px; border-radius: 8px; border: 2px solid #9C27B0; width: 280px; font-size: 16px; text-align: center; }
+        
+        .question { margin-bottom: 8px; padding: 8px; border-left: 5px solid #FF4081; background: #FFF9FB; border-radius: 0 10px 10px 0; }
+        .question p { font-size: 17px; margin: 0 0 5px 0; font-weight: bold; color: #333; }
+
+        .bubble-container { display: flex; gap: 8px; flex-wrap: wrap; }
+        .bubble-container label { cursor: pointer; }
+        .bubble-container input[type="radio"] { display: none; } 
+        .bubble { display: inline-block; padding: 5px 15px; background-color: #ffffff; border: 2px solid #FF4081; border-radius: 50px; font-size: 15px; font-weight: bold; color: #FF4081; }
+        .bubble-container input[type="radio"]:checked + .bubble { background-color: #FF4081; color: white; }
+
+        /* RESULT RECORD STYLES */
+        #result { display: none; text-align: left; padding: 30px; border: 5px solid #FFD600; background: #fff; border-radius: 15px; }
+        .record-header { text-align: center; margin-bottom: 10px; border-bottom: 3px solid #FFD600; padding-bottom: 5px; }
+        .score-top-box { text-align: center; margin: 10px 0; padding: 10px; background: #FFFDE7; border: 2px solid #FFD600; font-size: 24px; font-weight: bold; color: #F57F17; border-radius: 10px; }
+        .student-data { font-size: 18px; margin-bottom: 15px; font-weight: bold; text-transform: uppercase; color: #333; }
+        
+        table { width: 100%; border-collapse: collapse; font-family: 'Arial', sans-serif; }
+        th, td { border: 1px solid #FFD600; padding: 6px; font-size: 12px; }
+        th { background-color: #FFF9C4; text-align: center; color: #5D4037; }
+        .td-center { text-align: center; }
+        
+        .status-check { color: #2E7D32; font-size: 18px; font-weight: bold; text-align: center; }
+        .status-wrong { color: #D32F2F; font-size: 18px; font-weight: bold; text-align: center; }
+
+        .btn-finish { padding: 12px 30px; border: none; border-radius: 50px; cursor: pointer; font-size: 18px; font-weight: bold; margin: 30px auto; display: block; background-color: #4CAF50; color: white; }
+        .btn-print { background-color: #2196F3; color: white; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; border: none; display: block; margin: 25px auto; }
+
+        /* EXACT LETTER SIZE PRINT SETTINGS (8.5 x 11 inches) */
+        @media print {
+            @page { size: letter portrait; margin: 0.5in; }
+            body { background: white; padding: 0; margin: 0; }
+            .container { border: none; box-shadow: none; width: 100%; max-width: 100%; padding: 0; margin: 0; }
+            #quiz-form, .btn-print, h1, #subTitle, .instruction-box { display: none !important; }
+            
+            #result { 
+                display: block !important; 
+                border: 4px solid #FFD600 !important; 
+                width: 7.5in; /* 8.5in - 1in (margins) */
+                margin: auto;
+                box-sizing: border-box;
+            }
+            table { width: 100%; table-layout: fixed; }
+            th, td { word-wrap: break-word; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 id="mainTitle">Kindergarten Language</h1>
+    <p id="subTitle" style="text-align:center; font-weight:bold; color:#F57F17; margin-top:0;">( 3rd Grading 1st Periodical Exam )</p>
+    
+    <div id="quiz-form">
+        <div class="student-info-top">
+            <label><b>Student Name:</b></label><br>
+            <input type="text" id="studentName" placeholder="Enter Full Name">
+        </div>
+
+        <div class="section-header">Part 1: Using Articles "A" and "An"</div>
+        <div class="instruction-box">
+            <b>Instructions:</b> Listen to the beginning sound. Choose <b>"an"</b> if the word starts with a vowel (<b>A, E, I, O, U</b>). Choose <b>"a"</b> for consonants.
+        </div>
+        <div id="section1-questions"></div>
+
+        <div class="section-header">Part 2: Identifying Letters</div>
+        <div class="instruction-box">
+            <b>Instructions:</b> Identify if the letter is a <b>Vowel</b> or a <b>Consonant</b>.
+        </div>
+        <div id="section2-questions"></div>
+
+        <div class="section-header">Part 3: Is vs. Are</div>
+        <div class="instruction-box">
+            <b>Instructions:</b> Use <b>"is"</b> for one (singular) and <b>"are"</b> for more than one (plural).
+        </div>
+        <div id="section3-questions"></div>
+
+        <button class="btn-finish" onclick="calculateScore()">SUBMIT EXAM 🏁</button>
+    </div>
+
+    <div id="result">
+        <div class="record-header">
+            <h2 style="margin:0; font-size: 22px; color: #F57F17;">OFFICIAL EXAMINATION RECORD</h2>
+            <p style="margin:2px 0; font-size: 14px;">3rd Grading - 1st Periodical Exam</p>
+        </div>
+
+        <div class="score-top-box">
+            FINAL SCORE: <span id="scoreVal"></span> / 25
+        </div>
+
+        <div class="student-data" id="topNameDisplay">NAME: </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th width="8%">No.</th>
+                    <th width="52%">Item Description</th>
+                    <th width="15%">Answer</th>
+                    <th width="15%">Key</th>
+                    <th width="10%">Status</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+
+        <div style="margin-top: 50px; display: flex; justify-content: space-between; font-size: 14px;">
+            <div style="text-align:center;">
+                <p>__________________________</p>
+                <p>Teacher's Signature</p>
+            </div>
+            <div style="text-align:center;">
+                <p>__________________________</p>
+                <p>Date Recorded</p>
+            </div>
+        </div>
+        
+        <button class="btn-print" onclick="window.print()">🖨️ Print Record</button>
+    </div>
+</div>
+
+<script>
+    const section1 = [
+        { q: "1. ___ Ant 🐜", o: ["a", "an"], a: "an" },
+        { q: "2. ___ Bear 🐻", o: ["a", "an"], a: "a" },
+        { q: "3. ___ Orange 🍊", o: ["a", "an"], a: "an" },
+        { q: "4. ___ Kite 🪁", o: ["a", "an"], a: "a" },
+        { q: "5. ___ Igloo 🧊", o: ["a", "an"], a: "an" },
+        { q: "6. ___ Robot 🤖", o: ["a", "an"], a: "a" },
+        { q: "7. ___ Owl 🦉", o: ["a", "an"], a: "an" },
+        { q: "8. ___ Zebra 🦓", o: ["a", "an"], a: "a" }
+    ];
+
+    const section2 = [
+        { q: "9. Letter 'O' is a...", o: ["Vowel", "Consonant"], a: "Vowel" },
+        { q: "10. Letter 'T' is a...", o: ["Vowel", "Consonant"], a: "Consonant" },
+        { q: "11. Pick the Vowel:", o: ["B", "E", "R"], a: "E" },
+        { q: "12. Pick the Consonant:", o: ["A", "I", "D"], a: "D" },
+        { q: "13. Is 'I' a Vowel?", o: ["Yes", "No"], a: "Yes" },
+        { q: "14. Which one is a Vowel?", o: ["U", "X", "L"], a: "U" },
+        { q: "15. Is 'M' a Vowel?", o: ["Yes", "No"], a: "No" }
+    ];
+
+    const section3 = [
+        { q: "16. The apple ___ red. 🍎", o: ["is", "are"], a: "is" },
+        { q: "17. The stars ___ bright. ✨", o: ["is", "are"], a: "are" },
+        { q: "18. My mom ___ nice. 👩", o: ["is", "are"], a: "is" },
+        { q: "19. The toys ___ in the box. 🧸", o: ["is", "are"], a: "are" },
+        { q: "20. A fish ___ swimming. 🐟", o: ["is", "are"], a: "is" },
+        { q: "21. You ___ very smart! 🌟", o: ["is", "are"], a: "are" },
+        { q: "22. The frogs ___ jumping. 🐸🐸", o: ["is", "are"], a: "are" },
+        { q: "23. It ___ a sunny day. ☀️", o: ["is", "are"], a: "is" },
+        { q: "24. We ___ eating lunch. 🍏", o: ["is", "are"], a: "are" },
+        { q: "25. The bus ___ big. 🚌", o: ["is", "are"], a: "is" }
+    ];
+
+    function render(data, containerId, offset) {
+        const container = document.getElementById(containerId);
+        data.forEach((item, index) => {
+            let optionsHtml = item.o.map(opt => `
+                <label>
+                    <input type="radio" name="q${index + offset}" value="${opt}">
+                    <span class="bubble">${opt}</span>
+                </label>
+            `).join('');
+            container.innerHTML += `<div class="question"><p>${item.q}</p><div class="bubble-container">${optionsHtml}</div></div>`;
+        });
+    }
+
+    render(section1, 'section1-questions', 0);
+    render(section2, 'section2-questions', 8);
+    render(section3, 'section3-questions', 15);
+
+    function calculateScore() {
+        const nameInput = document.getElementById('studentName').value;
+        const name = nameInput ? nameInput.toUpperCase() : "STUDENT";
+        let score = 0;
+        let tableRows = "";
+        const all = [...section1, ...section2, ...section3];
+
+        all.forEach((item, index) => {
+            let selected = document.querySelector(`input[name="q${index}"]:checked`);
+            let ans = selected ? selected.value : "---";
+            let correct = ans === item.a;
+            if (correct) score++;
+            
+            tableRows += `
+                <tr>
+                    <td class="td-center">${index + 1}</td>
+                    <td>${item.q}</td>
+                    <td class="td-center">${ans}</td>
+                    <td class="td-center">${item.a}</td>
+                    <td class="${correct ? 'status-check' : 'status-wrong'}">${correct ? '✔' : '✘'}</td>
+                </tr>`;
+        });
+
+        document.getElementById('quiz-form').style.display = 'none';
+        document.getElementById('mainTitle').style.display = 'none';
+        document.getElementById('subTitle').style.display = 'none';
+        document.getElementById('result').style.display = 'block';
+        
+        document.getElementById('topNameDisplay').innerText = "NAME: " + name;
+        document.getElementById('scoreVal').innerText = score;
+        document.getElementById('tableBody').innerHTML = tableRows;
+        window.scrollTo(0,0);
+    }
+</script>
+
+</body>
+</html>
